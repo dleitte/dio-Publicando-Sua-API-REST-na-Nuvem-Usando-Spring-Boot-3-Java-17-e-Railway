@@ -1,0 +1,7 @@
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.9</version>
+</dependency>
+springdoc.api-docs.path=/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
