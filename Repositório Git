@@ -1,0 +1,14 @@
+# Inicialize um repositório Git local
+git init
+
+# Adicione todos os arquivos ao repositório
+git add .
+
+# Faça commit das alterações
+git commit -m "Initial commit"
+
+# Adicione o repositório remoto
+git remote add origin https://github.com/seu-usuario/seu-repositorio.git
+
+# Envie as alterações para o GitHub
+git push -u origin main
