@@ -1,0 +1,16 @@
+src
+└── main
+    ├── java
+    │   └── com
+    │       └── example
+    │           └── restaurant
+    │               ├── config
+    │               ├── controller
+    │               ├── model
+    │               ├── repository
+    │               ├── service
+    │               └── observer
+    └── resources
+        ├── static
+        ├── templates
+        ├── application.properties
