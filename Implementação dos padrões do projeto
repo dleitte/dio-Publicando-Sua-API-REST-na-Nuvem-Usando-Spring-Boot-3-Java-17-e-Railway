@@ -1,0 +1,172 @@
+//Singleton
+package com.example.restaurant.config;
+
+public class AppConfig {
+    private static AppConfig instance;
+
+    private AppConfig() {
+        // Configurações iniciais
+    }
+
+    public static synchronized AppConfig getInstance() {
+        if (instance == null) {
+            instance = new AppConfig();
+        }
+        return instance;
+    }
+}
+//Factory Method
+package com.example.restaurant.model;
+
+public abstract class Dish {
+    private String description;
+
+    public Dish(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public abstract double cost();
+}
+
+class Pizza extends Dish {
+    public Pizza() {
+        super("Pizza");
+    }
+
+    @Override
+    public double cost() {
+        return 8.99;
+    }
+}
+
+class Pasta extends Dish {
+    public Pasta() {
+        super("Pasta");
+    }
+
+    @Override
+    public double cost() {
+        return 7.99;
+    }
+}
+
+abstract class DishFactory {
+    public abstract Dish createDish();
+}
+
+class PizzaFactory extends DishFactory {
+    @Override
+    public Dish createDish() {
+        return new Pizza();
+    }
+}
+
+class PastaFactory extends DishFactory {
+    @Override
+    public Dish createDish() {
+        return new Pasta();
+    }
+}
+//Observer
+package com.example.restaurant.observer;
+
+import com.example.restaurant.model.Order;
+
+public interface OrderObserver {
+    void update(Order order);
+}
+
+package com.example.restaurant.model;
+
+import com.example.restaurant.observer.OrderObserver;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Order {
+    private Dish dish;
+    private String status;
+    private List<OrderObserver> observers = new ArrayList<>();
+
+    public Order(Dish dish) {
+        this.dish = dish;
+        this.status = "Received";
+    }
+
+    public Dish getDish() {
+        return dish;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        notifyObservers();
+    }
+
+    public void addObserver(OrderObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(OrderObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (OrderObserver observer : observers) {
+            observer.update(this);
+        }
+    }
+}
+//Decorator
+package com.example.restaurant.model;
+
+public abstract class DishDecorator extends Dish {
+    protected Dish decoratedDish;
+
+    public DishDecorator(Dish decoratedDish) {
+        super(decoratedDish.getDescription());
+        this.decoratedDish = decoratedDish;
+    }
+
+    @Override
+    public abstract String getDescription();
+}
+
+class CheeseDecorator extends DishDecorator {
+    public CheeseDecorator(Dish decoratedDish) {
+        super(decoratedDish);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedDish.getDescription() + ", Cheese";
+    }
+
+    @Override
+    public double cost() {
+        return decoratedDish.cost() + 0.99;
+    }
+}
+
+class PepperoniDecorator extends DishDecorator {
+    public PepperoniDecorator(Dish decoratedDish) {
+        super(decoratedDish);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedDish.getDescription() + ", Pepperoni";
+    }
+
+    @Override
+    public double cost() {
+        return decoratedDish.cost() + 1.49;
+    }
+}
